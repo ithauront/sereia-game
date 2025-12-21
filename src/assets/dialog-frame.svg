@@ -1,0 +1,65 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 100 100"
+  preserveAspectRatio="none"
+>
+  <defs>
+    <!-- Gradiente dourado -->
+    <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f6e6a8"/>
+      <stop offset="40%" stop-color="#d6b25e"/>
+      <stop offset="70%" stop-color="#b8872f"/>
+      <stop offset="100%" stop-color="#7a4a12"/>
+    </linearGradient>
+
+    <!-- Gradiente escuro -->
+    <linearGradient id="metalDark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a2d0b"/>
+      <stop offset="100%" stop-color="#2a1606"/>
+    </linearGradient>
+
+    <!-- Máscara central vazada -->
+    <mask id="cutout">
+      <rect width="100%" height="100%" fill="white"/>
+      <rect x="5%" y="12%" width="90%" height="76%" fill="black"/>
+    </mask>
+  </defs>
+
+  <!-- BORDA EXTERNA -->
+  <g mask="url(#cutout)">
+    <rect width="100%" height="100%" fill="url(#metalDark)"/>
+
+    <!-- BORDA PRINCIPAL -->
+    <rect x="1.2%" y="3%" width="97.6%" height="94%" fill="url(#metal)"/>
+
+    <!-- LINHA INTERNA -->
+    <rect
+      x="3%"
+      y="7%"
+      width="94%"
+      height="86%"
+      fill="none"
+      stroke="#fff3c4"
+      stroke-width="1.5%"
+    />
+  </g>
+
+  <!-- DETALHES ART DECO (CANTOS) -->
+  <g fill="#fff3c4">
+    <!-- Top Left -->
+    <rect x="3%" y="7%" width="4%" height="1%"/>
+    <rect x="3%" y="8%" width="1%" height="6%"/>
+
+    <!-- Top Right -->
+    <rect x="93%" y="7%" width="4%" height="1%"/>
+    <rect x="96%" y="8%" width="1%" height="6%"/>
+
+    <!-- Bottom Left -->
+    <rect x="3%" y="92%" width="4%" height="1%"/>
+    <rect x="3%" y="86%" width="1%" height="6%"/>
+
+    <!-- Bottom Right -->
+    <rect x="93%" y="92%" width="4%" height="1%"/>
+    <rect x="96%" y="86%" width="1%" height="6%"/>
+  </g>
+</svg>
