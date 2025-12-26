@@ -1,7 +1,11 @@
-export function App() {
+import { BrowserRouter } from 'react-router-dom'
 
+import { AppRoutes } from './Routes/app.routes'
+
+export function App() {
   return (
-   <h1>App page</h1>
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
   )
 }
-
