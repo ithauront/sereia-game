@@ -1,20 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+
+import { useWorld } from '../Contexts/worldContext'
+import { clamp } from '../utils/clamp'
 
 export type CharDirection = 'front' | 'back' | 'left' | 'right'
 
 interface UseCharacterMouvementParams {
   initialPosition?: { x: number; y: number }
-  speed?: number
 }
 
-export function useCharacterMouvement({
+export function useCharacterMouvementInWorld({
   initialPosition = {
     x: 200,
     y: 200,
   },
-  speed = 2,
 }: UseCharacterMouvementParams = {}) {
-  const containerRef = useRef<HTMLDivElement>(null)
+  const { width: worldWidth, height: worldHeight, defaultPlayerSpeed } = useWorld()
+
   const animationRef = useRef<number | null>(null)
 
   const [position, setPosition] = useState(initialPosition)
@@ -22,31 +24,26 @@ export function useCharacterMouvement({
   const [isWalking, setIsWalking] = useState(false)
   const [direction, setDirection] = useState<CharDirection>('front')
 
-  function handleClick(evento: React.MouseEvent) {
-    if (!containerRef.current) return
+  const moveTo = (x: number, y: number) => {
+    const clampedX = clamp(x, 0, worldWidth)
+    const clampedY = clamp(y, 0, worldHeight)
 
-    const rect = containerRef.current.getBoundingClientRect()
+    const distanceX = clampedX - position.x
+    const distanceY = clampedY - position.y
 
-    const x = evento.clientX - rect.left
-    const y = evento.clientY - rect.top
-
-    if (animationRef.current) {
-      cancelAnimationFrame(animationRef.current)
-    }
     setTarget({
-      x,
-      y,
+      x: clampedX,
+      y: clampedY,
     })
     setIsWalking(true)
-
-    const distanceX = x - position.x
-    const distanceY = y - position.y
 
     if (Math.abs(distanceX) > Math.abs(distanceY)) {
       setDirection(distanceX > 0 ? 'right' : 'left')
     } else {
       setDirection(distanceY > 0 ? 'front' : 'back')
     }
+
+    if (animationRef.current) cancelAnimationFrame(animationRef.current)
   }
 
   useEffect(() => {
@@ -60,15 +57,15 @@ export function useCharacterMouvement({
         const distanceY = currentTarget?.y - prev.y
         const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY)
 
-        if (distance <= speed) {
+        if (distance <= defaultPlayerSpeed) {
           setIsWalking(false)
           setTarget(null)
           return currentTarget
         }
 
         return {
-          x: prev.x + (distanceX / distance) * speed,
-          y: prev.y + (distanceY / distance) * speed,
+          x: clamp(prev.x + (distanceX / distance) * defaultPlayerSpeed, 0, worldWidth),
+          y: clamp(prev.y + (distanceY / distance) * defaultPlayerSpeed, 0, worldHeight),
         }
       })
       animationRef.current = requestAnimationFrame(move)
@@ -81,13 +78,13 @@ export function useCharacterMouvement({
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [target, speed])
+  }, [target, defaultPlayerSpeed, worldHeight, worldWidth])
 
   return {
-    containerRef,
     position,
+    target,
     isWalking,
     direction,
-    handleClick,
+    moveTo,
   }
 }
