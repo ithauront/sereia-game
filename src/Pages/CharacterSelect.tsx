@@ -1,28 +1,24 @@
 import { useState } from 'react'
 
-import playerFront from '../assets/playerTemplates/playerFront.png'
+import { useNavigate } from 'react-router-dom'
+
+import { DialogBox } from '../Components/DialogBox'
+import { useCharacterContext } from '../Contexts/characterContext'
 
 //TODO: se estiver em tela de celular fazer como um carrossel para selecionar o personagem.
 export function CharacterSelection() {
-  const characters = [
-    {
-      id: 'boy',
-      name: 'Boy',
-      sprite: playerFront,
-    },
-    {
-      id: 'girl',
-      name: 'Girl',
-      sprite: playerFront,
-    },
-    {
-      id: 'monster',
-      name: 'Monster',
-      sprite: playerFront,
-    },
-  ]
-
+  const { characters, selectCharacter } = useCharacterContext()
+  const navigate = useNavigate()
   const [selectedId, setSelectedId] = useState<string | null>(null)
+
+  function handleClick(id: string) {
+    if (selectedId === id) {
+      selectCharacter(id)
+      navigate('/start')
+    }
+
+    setSelectedId(id)
+  }
 
   return (
     <div className="w-full min-h-screen flex items-center justify-center select-screen-bg">
@@ -41,14 +37,17 @@ export function CharacterSelection() {
                 <div
                   className={`relative character-select-frame h-120 w-60 flex items-center justify-center cursor-pointer
           `}
-                  onClick={() => setSelectedId(char.id)}
+                  onClick={() => handleClick(char.id)}
                 >
-                  <img src={char.sprite} className="ml-2" />
+                  <img src={char.preview} className="ml-2" />
                 </div>
               </div>
             )
           })}
         </div>
+        {selectedId && (
+          <DialogBox text="Para confirmar a seleção clique novamente no mesmo personagem" />
+        )}
       </div>
     </div>
   )
