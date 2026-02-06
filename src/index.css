@@ -3,15 +3,12 @@
 @config '../tailwind.config.js';
 
 @theme {
-  
-  --font-sans: "Roboto", sans-serif;
-  --font-pixel: "Press Start 2P", monospace;
+  --font-sans: 'Roboto', sans-serif;
+  --font-pixel: 'Press Start 2P', monospace;
 
-
-  
-    --color-brand: #0ea5e9;
-    --color-brand-dark: #0369a1;
-  }
+  --color-brand: #0ea5e9;
+  --color-brand-dark: #0369a1;
+}
 
 html {
   font-family: var(--font-sans);
@@ -36,9 +33,22 @@ html {
 }
 .start-screen-bg {
   background-image: url('/city_map.png');
-  background-size: cover;
-  background-position: center;
   background-repeat: no-repeat;
+  background-position: top left;
+  background-size: auto;
+}
+/* TODO: criar uma imagem de fog e colocar ela aqui no foglayer e assim ela vai envolver o mapa */
+.fog-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+
+  background: radial-gradient(
+    ellipse at center,
+    rgba(147, 13, 13, 0) 45%,
+    rgba(234, 4, 4, 0.85) 100%
+  );
 }
 
 .dialog-frame {
@@ -64,14 +74,6 @@ html {
 
 .ring-active {
   border-radius: 14px;
-  background: linear-gradient(
-    120deg,
-    #fff3c4,
-    #d6b25e,
-    #b8872f,
-    #fff3c4
-  );
+  background: linear-gradient(120deg, #fff3c4, #d6b25e, #b8872f, #fff3c4);
   animation: glow 2.5s linear infinite;
 }
-
-
