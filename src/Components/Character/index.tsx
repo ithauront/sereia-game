@@ -18,5 +18,5 @@ export function Character({ direction = 'front', isWalking }: CharacterProps) {
 
   const frameIndex = isVertical ? verticalFrameIndex : horizontalFrameIndex
 
-  return <img className="h-30 w-20 pointer-events-none" src={frames[frameIndex]} />
+  return <img className="h-20 w-15 pointer-events-none" src={frames[frameIndex]} />
 }
