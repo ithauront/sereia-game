@@ -5,6 +5,7 @@ import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { AvatarBox } from '../AvatarBox'
 import { Button } from '../Button'
 import { trimToLastWord } from './utils'
+import { RoundButton } from '../roundButton/roundButton'
 
 export interface DialogActionButton {
   label: string
@@ -100,7 +101,9 @@ export function DialogBox({ text, actionButtons, avatar }: DialogBoxProps) {
             shadow-inner
             rounded-md
             p-3
+            
           "
+            onClick={handleNext}
           >
             <p
               ref={textRef}
@@ -110,12 +113,9 @@ export function DialogBox({ text, actionButtons, avatar }: DialogBoxProps) {
             </p>
 
             {hasNext && (
-              <button
-                onClick={handleNext}
-                className="absolute bottom-2 right-2 text-sm opacity-70 hover:opacity-100 animate-pulse"
-              >
-                ▶
-              </button>
+              <div className="absolute bottom-1 right-2">
+                <RoundButton direction="right" size="sm" onClick={handleNext} isInDialog />
+              </div>
             )}
           </div>
         </div>
