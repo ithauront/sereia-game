@@ -27,7 +27,7 @@ type Camera = {
   cameraRect: CameraRectType
   cameraMoveTo: (target: Vector2d) => void
 }
-//TODO: verificar se deixamos mesmo o useWorld aqui ou se desacoplamos e passomos por prop
+
 export function useCamera({ cameraSize, zoom }: UseCameraParams): Camera {
   const { height: worldHeight, width: worldWidth } = useWorld()
   const [position, setPosition] = useState<Vector2d>({
