@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
-import { DIALOG_BOX_TYPE_SPEED, MOBILE_WIDHT } from '../../consts/magicNumbers'
+import { DIALOG_BOX_TYPE_SPEED, MOBILE_WIDTH } from '../../consts/magicNumbers'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { AvatarBox } from '../AvatarBox'
 import { Button } from '../Button'
@@ -20,7 +20,7 @@ interface DialogBoxProps {
 }
 
 export function DialogBox({ text, actionButtons, avatar }: DialogBoxProps) {
-  const isMobile = useMediaQuery(`(max-width: ${MOBILE_WIDHT})`)
+  const isMobile = useMediaQuery(`(max-width: ${MOBILE_WIDTH})`)
   const buttonSize = isMobile ? 'xs' : 'md'
   const containerRef = useRef<HTMLDivElement | null>(null)
   const textRef = useRef<HTMLParagraphElement | null>(null)
