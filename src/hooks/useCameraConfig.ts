@@ -2,22 +2,27 @@ import { useMemo } from 'react'
 
 import { useMediaQuery } from './useMediaQuery'
 import { useViewportSize } from './useViewportSize'
-//TODO: padronizar os tamanhos das consts
-//TODO: temos que adaptar para se o celular esta vertical ou horizontal. ou então dar um aviso que o jogo se joga na vertical.
+import {
+  MOBILE_CAM_HEIGHT,
+  MOBILE_CAM_WIDTH,
+  SCREEN_CAM_HEIGHT,
+  SCREEN_CAM_WIDTH,
+} from '../consts/magicNumbers'
+
 export function useCameraConfig() {
   const { width, height } = useViewportSize()
-  const isMobile = useMediaQuery('(max-width: 768px)')
+  const isMobile = useMediaQuery('(pointer: coarse)') //mobile or tablet
 
   const cameraSize = useMemo(() => {
     if (isMobile) {
       return {
-        x: 360,
-        y: 640,
+        x: MOBILE_CAM_WIDTH,
+        y: MOBILE_CAM_HEIGHT,
       }
     }
     return {
-      x: 1280,
-      y: 720,
+      x: SCREEN_CAM_WIDTH,
+      y: SCREEN_CAM_HEIGHT,
     }
   }, [isMobile])
 

@@ -57,10 +57,6 @@ export function useCamera({ cameraSize, zoom }: UseCameraParams): Camera {
       const clampedX = clamp(target.x, halfCamX, worldWidth - halfCamX)
       const clampedY = clamp(target.y, halfCamY, worldHeight - halfCamY)
 
-      // TODO: aqui entraria lógica de smoothing / lerp
-      // TODO: aqui poderia existir deadzone de camera
-      // TODO: aqui poderia existir offset dinâmico (look ahead)
-
       setPosition({
         x: clampedX,
         y: clampedY,
