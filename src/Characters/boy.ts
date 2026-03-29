@@ -10,6 +10,9 @@ import boyLeftRleg from '../assets/playerTemplates/boyLeftRleg.png'
 import boyRight from '../assets/playerTemplates/boyRight.png'
 import boyRightLleg from '../assets/playerTemplates/boyRightLleg.png'
 import boyRightRleg from '../assets/playerTemplates/boyRightRleg.png'
+import boyVictory from '../assets/playerTemplates/boyVictory.png'
+import boyDefeat from '../assets/playerTemplates/boyDefeat.png'
+
 import type { CharacterDefinition } from '../Contexts/characterContext'
 
 export const boyCharacter: CharacterDefinition = {
@@ -22,4 +25,6 @@ export const boyCharacter: CharacterDefinition = {
     left: [boyLeft, boyLeftRleg, boyLeftLleg],
     right: [boyRight, boyRightRleg, boyRightLleg],
   },
+  victory: boyVictory,
+  defeat: boyDefeat,
 }

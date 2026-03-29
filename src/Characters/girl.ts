@@ -10,7 +10,11 @@ import girlLeftRleg from '../assets/playerTemplates/girlLeftRLeg.png'
 import girlRight from '../assets/playerTemplates/girlRight.png'
 import girlRightLleg from '../assets/playerTemplates/girlRightLLeg.png'
 import girlRightRleg from '../assets/playerTemplates/girlRightRLeg.png'
+import girlVictory from '../assets/playerTemplates/girlVictory.png'
+import girlDefeat from '../assets/playerTemplates/girlDefeat.png'
+
 import type { CharacterDefinition } from '../Contexts/characterContext'
+
 export const girlCharacter: CharacterDefinition = {
   id: 'girl',
   name: 'Girl',
@@ -21,4 +25,6 @@ export const girlCharacter: CharacterDefinition = {
     left: [girlLeft, girlLeftRleg, girlLeftLleg],
     right: [girlRight, girlRightRleg, girlRightLleg],
   },
+  victory: girlVictory,
+  defeat: girlDefeat,
 }

@@ -10,6 +10,8 @@ import pandaLeftRleg from '../assets/playerTemplates/pandaLeftRLeg.png'
 import pandaRight from '../assets/playerTemplates/pandaRight.png'
 import pandaRightLleg from '../assets/playerTemplates/pandaRightLLeg.png'
 import pandaRightRleg from '../assets/playerTemplates/pandaRightRLeg.png'
+import pandaVictory from '../assets/playerTemplates/pandaVictory.png'
+import pandaDefeat from '../assets/playerTemplates/pandaDefeat.png'
 import type { CharacterDefinition } from '../Contexts/characterContext'
 
 export const pandaCharacter: CharacterDefinition = {
@@ -22,4 +24,6 @@ export const pandaCharacter: CharacterDefinition = {
     left: [pandaLeft, pandaLeftLleg, pandaLeftRleg],
     right: [pandaRight, pandaRightLleg, pandaRightRleg],
   },
+  victory: pandaVictory,
+  defeat: pandaDefeat,
 }
