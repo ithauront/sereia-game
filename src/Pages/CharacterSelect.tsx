@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { DialogBox } from '../Components/DialogBox'
 import { useCharacterContext } from '../Contexts/characterContext'
 import { RoundButton } from '../Components/roundButton/roundButton'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 
 export function CharacterSelection() {
   const { characters, selectCharacter } = useCharacterContext()
@@ -12,6 +13,12 @@ export function CharacterSelection() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const currentCharacter = characters[currentIndex]
   const [selectedId, setSelectedId] = useState<string | null>(null)
+
+  const isLandscape = useMediaQuery('(orientation: landscape)')
+  const isMobile = useMediaQuery('(pointer: coarse)')
+  if (isLandscape && isMobile) {
+    return <div className="rotate-warning">Gire o celular para jogar 📱</div>
+  }
 
   function handleClick(id: string) {
     if (selectedId === id) {
