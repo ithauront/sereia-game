@@ -32,23 +32,20 @@ html {
   background-repeat: no-repeat;
 }
 .start-screen-bg {
-  background-image: url('/city_map.png');
+  background-image: url('/city_map.jpg');
   background-repeat: no-repeat;
   background-position: top left;
   background-size: auto;
 }
-/* TODO: criar uma imagem de fog e colocar ela aqui no foglayer e assim ela vai envolver o mapa */
-.fog-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 10;
-  pointer-events: none;
 
-  background: radial-gradient(
-    ellipse at center,
-    rgba(147, 13, 13, 0) 45%,
-    rgba(234, 4, 4, 0.85) 100%
-  );
+.water-layer {
+  position: absolute;
+
+  background-image: url('/water.jpg');
+  background-repeat: repeat;
+  background-size: 256px 256px;
+
+  z-index: 0;
 }
 
 .dialog-frame {
@@ -76,4 +73,62 @@ html {
   border-radius: 14px;
   background: linear-gradient(120deg, #fff3c4, #d6b25e, #b8872f, #fff3c4);
   animation: glow 2.5s linear infinite;
+}
+
+.rotate-warning {
+  position: fixed;
+  inset: 0;
+  background: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  z-index: 9999;
+}
+
+.fade-black {
+  animation: fadeToBlack 0.3s ease forwards;
+}
+
+@keyframes fadeToBlack {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.tattoo-animation {
+  animation:
+    bounce 0.4s ease-in-out infinite alternate,
+    vibrate 0.08s linear infinite;
+}
+
+@keyframes bounce {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes vibrate {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(1px, -1px);
+  }
+  50% {
+    transform: translate(-1px, 1px);
+  }
+  75% {
+    transform: translate(1px, 1px);
+  }
+  100% {
+    transform: translate(-1px, -1px);
+  }
 }
