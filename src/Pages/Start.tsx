@@ -1,13 +1,18 @@
 import type React from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Character } from '../Components/Character'
 import { useWorld } from '../Contexts/worldContext'
 import { useCamera } from '../hooks/useCamera'
 import { useCameraConfig } from '../hooks/useCameraConfig'
 import { useCharacterMouvementInWorld } from '../hooks/useCharacterMovementInWorld'
-//TODO: ajustar a camera no celular. o mouvement não acompanha, talvez por conta das proporções. precisamos de um camera size diferente para mobile e desktop. precisamos tambem retirar o zoom quando esta no mobile. essas duas coisas ja ajudam, mas ainda dão um certo lag quando o character anda. preceisamos investigar o porque e resolver.
+import { loadCollisionMapData } from '../utils/loadCollisionMapData'
+import { useCutsceneTrigger } from '../hooks/useCutsceneTrigger'
+
 export function Start() {
+  //TODO: conseguir uma trilha sonora para o jogo inteiro. ideal pagode em 8bits
+  const [collisionData, setCollisionData] = useState<ImageData | null>(null)
+
   const { width: worldWidth, height: worldHeight } = useWorld()
   const { cameraSize, zoomFactor } = useCameraConfig()
 
@@ -15,7 +20,9 @@ export function Start() {
     cameraSize,
     zoom: zoomFactor,
   })
-  const { direction, isWalking, position, moveTo } = useCharacterMouvementInWorld()
+  const { direction, isWalking, position, moveTo } = useCharacterMouvementInWorld({ collisionData })
+
+  useCutsceneTrigger(position)
 
   function handleClick(evento: React.MouseEvent<HTMLDivElement>) {
     const rect = (evento.currentTarget as HTMLDivElement).getBoundingClientRect()
@@ -33,26 +40,43 @@ export function Start() {
     cameraMoveTo(position)
   }, [position, cameraMoveTo])
 
+  useEffect(() => {
+    loadCollisionMapData('/city_map_walkable.jpg').then(setCollisionData)
+  }, [])
+
   return (
     <div className="relative overflow-hidden w-screen h-screen">
       <div
+        className="water-layer"
+        style={{
+          width: worldWidth * 3,
+          height: worldHeight * 3,
+          transform: `
+        translate(
+          ${-(cameraPosition.x - cameraSize.x / 2) * zoomFactor}px,
+          ${-(cameraPosition.y - cameraSize.y / 2) * zoomFactor}px
+        )
+        scale(${zoomFactor})
+      `,
+        }}
+      />
+      <div
         onClick={handleClick}
-        className="world start-screen-bg"
+        className="start-screen-bg "
         style={{
           position: 'absolute',
-          left: '20%',
-          top: 0,
           width: worldWidth,
           height: worldHeight,
 
           transform: `
-          translate(
-            ${-(cameraPosition.x - cameraSize.x / 2) * zoomFactor}px,
-            ${-(cameraPosition.y - cameraSize.y / 2) * zoomFactor}px
-          )
-          scale(${zoomFactor})
-        `,
+        translate(
+          ${-(cameraPosition.x - cameraSize.x / 2) * zoomFactor}px,
+          ${-(cameraPosition.y - cameraSize.y / 2) * zoomFactor}px
+        )
+        scale(${zoomFactor})
+      `,
           transformOrigin: 'top left',
+          zIndex: 1,
         }}
       >
         <div
@@ -61,13 +85,12 @@ export function Start() {
             left: position.x,
             top: position.y,
             transform: 'translate(-50%, -50%)',
+            zIndex: 2,
           }}
         >
           <Character isWalking={isWalking} direction={direction} />
         </div>
       </div>
-
-      <div className="fog-layer" />
     </div>
   )
 }
