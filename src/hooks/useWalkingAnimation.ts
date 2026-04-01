@@ -7,7 +7,7 @@ type UseWalkinAnimationProps = {
   frameDuration?: number
 }
 
-export function useWalinkAnimation({
+export function useWalkingAnimation({
   isWalking,
   frameDuration = DEFAULT_WALKING_FRAME_DURATION,
 }: UseWalkinAnimationProps) {

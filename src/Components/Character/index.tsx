@@ -1,6 +1,6 @@
 import { useCharacterContext } from '../../Contexts/characterContext'
 import type { CharDirection } from '../../hooks/useCharacterMovementInWorld'
-import { useWalinkAnimation } from '../../hooks/useWalkingAnimation'
+import { useWalkingAnimation } from '../../hooks/useWalkingAnimation'
 
 interface CharacterProps {
   direction?: CharDirection
@@ -9,7 +9,7 @@ interface CharacterProps {
 
 export function Character({ direction = 'front', isWalking }: CharacterProps) {
   const { selectedCharacter } = useCharacterContext()
-  const { verticalFrameIndex, horizontalFrameIndex } = useWalinkAnimation({
+  const { verticalFrameIndex, horizontalFrameIndex } = useWalkingAnimation({
     isWalking,
   })
   if (!selectedCharacter) return null
