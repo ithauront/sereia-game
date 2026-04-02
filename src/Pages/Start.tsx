@@ -41,7 +41,7 @@ export function Start() {
   }, [position, cameraMoveTo])
 
   useEffect(() => {
-    loadCollisionMapData('/city_map_walkable.jpg').then(setCollisionData)
+    loadCollisionMapData(`${import.meta.env.BASE_URL}city_map_walkable.jpg`).then(setCollisionData)
   }, [])
 
   return (

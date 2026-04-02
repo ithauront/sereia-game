@@ -6,7 +6,7 @@ import { AppRoutes } from './Routes/app.routes'
 
 export function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/sereia-game/">
       <WorldProvider>
         <CharacterProvider>
           <AppRoutes />
