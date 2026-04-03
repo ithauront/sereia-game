@@ -4,6 +4,7 @@ import { createContext, useContext, useState, type ReactNode } from 'react'
 import { boyCharacter } from '../Characters/boy'
 import { girlCharacter } from '../Characters/girl'
 import { pandaCharacter } from '../Characters/panda'
+import { preloadImages } from '../utils/preloadImages'
 
 export type CharacterSprites = {
   front: string[]
@@ -32,6 +33,7 @@ type CharacterContextType = {
   unlockedCutscenes: string[]
   isInCutscene: boolean
   playerPosition: Position
+  isCharacterReady: boolean
   setPlayerPosition: (pos: Position) => void
   setIsInCutscene: (value: boolean) => void
   selectCharacter: (id: string) => void
@@ -42,6 +44,7 @@ const CharacterContext = createContext<CharacterContextType | null>(null)
 
 export function CharacterProvider({ children }: { children: ReactNode }) {
   const characters = [boyCharacter, girlCharacter, pandaCharacter]
+  const [isCharacterReady, setIsCharacterReady] = useState(false)
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [unlockedCutscenes, setUnlockedCutscenes] = useState<string[]>([])
   const [isInCutscene, setIsInCutscene] = useState(false)
@@ -49,15 +52,27 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
 
   const selectedCharacter = characters.find((char) => char.id === selectedId) ?? null
 
-  function selectCharacter(id: string) {
-    setUnlockedCutscenes([])
-    setPlayerPosition({ x: 500, y: 200 })
-    setSelectedId(id)
-  }
+  async function selectCharacter(id: string) {
+  setIsCharacterReady(false)
 
+  const character = characters.find((char) => char.id === id)
+  if (!character) return
+
+  const allSprites = Object.values(character.sprites).flat()
+
+  await preloadImages(allSprites)
+
+  setUnlockedCutscenes([])
+  setPlayerPosition({ x: 500, y: 200 })
+  setSelectedId(id)
+
+  setIsCharacterReady(true)
+}
   function unlockCutscene(id: string) {
     setUnlockedCutscenes((prev) => (prev.includes(id) ? prev : [...prev, id]))
   }
+
+  
 
   return (
     <CharacterContext.Provider
@@ -71,6 +86,7 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
         setIsInCutscene,
         playerPosition,
         setPlayerPosition,
+        isCharacterReady
       }}
     >
       {children}

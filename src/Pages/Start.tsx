@@ -8,10 +8,12 @@ import { useCameraConfig } from '../hooks/useCameraConfig'
 import { useCharacterMouvementInWorld } from '../hooks/useCharacterMovementInWorld'
 import { loadCollisionMapData } from '../utils/loadCollisionMapData'
 import { useCutsceneTrigger } from '../hooks/useCutsceneTrigger'
+import { useCharacterContext } from '../Contexts/characterContext'
 
 export function Start() {
   //TODO: conseguir uma trilha sonora para o jogo inteiro. ideal pagode em 8bits
   const [collisionData, setCollisionData] = useState<ImageData | null>(null)
+  const { isCharacterReady } = useCharacterContext()
 
   const { width: worldWidth, height: worldHeight } = useWorld()
   const { cameraSize, zoomFactor } = useCameraConfig()
@@ -43,7 +45,11 @@ export function Start() {
   useEffect(() => {
     loadCollisionMapData(`${import.meta.env.BASE_URL}city_map_walkable.jpg`).then(setCollisionData)
   }, [])
-
+  // TODO: no inicio demora um pouco pra carregar as imagens de walking. talvez fazer algo para a gente dar um fetch nelas antes e so abrir a pagina quando estiver carregado. talvez uma tela de loading.
+  //TODO ajustar revisar textos
+  //TODO: protger o github e principalmente a branch main
+  //TODO: enre farol de itapua e aeroporto esta andando pelo mar
+  // TODO: revisar acentos.
   return (
     <div className="relative overflow-hidden w-screen h-screen">
       <div
@@ -88,7 +94,7 @@ export function Start() {
             zIndex: 2,
           }}
         >
-          <Character isWalking={isWalking} direction={direction} />
+          <Character isWalking={isCharacterReady && isWalking} direction={direction} />
         </div>
       </div>
     </div>

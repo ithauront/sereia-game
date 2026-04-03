@@ -20,9 +20,9 @@ export function CharacterSelection() {
     return <div className="rotate-warning">Gire o celular para jogar 📱</div>
   }
 
-  function handleClick(id: string) {
+  async function handleClick(id: string) {
     if (selectedId === id) {
-      selectCharacter(id)
+      await selectCharacter(id)
       navigate('/mermaid')
     }
 
