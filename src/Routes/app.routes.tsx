@@ -8,11 +8,13 @@ import { MermaidInstructions } from '../Pages/MermaidInstruction'
 import { GameOver } from '../Pages/GameOver'
 import { Cutscene } from '../Pages/Cutscene'
 import { SereiaTattoo } from '../Pages/SereiaTattoo'
+import { Loading } from '../Pages/Loading'
 
 export function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<CharacterSelection />} />
+      <Route path='/' element={<Loading />}/>
+      <Route path="/character-selection" element={<CharacterSelection />} />
 
       <Route element={<RequireCharacterGuard />}>
         <Route path="/mermaid" element={<MermaidInstructions />} />

@@ -51,6 +51,7 @@ export function Start() {
   //TODO: colocar todos os sprites exatamente do mesmo tamanho.
   // TODO: ver como fica a questão de leitura, pq ele corta a palavra e volta. talvez em celular deixar todo e permitir scroll, ou sempre permitir scroll
   // TODO: na parte do zeramento, ter algo de compartilhar o link, botéao de copiar. facilitar o compartilhamento.
+  //TODO: fazer uma pagina notfound
   return (
     <div className="relative overflow-hidden w-screen h-screen">
       <div

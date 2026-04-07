@@ -20,13 +20,9 @@ export function MermaidInstructions() {
 
   const missionText = `
 Então voce quer uma tatuagem especial?
-O único lugar capaz de fazê-la é o misterioso
-"Sereia Tattoo Studio".
-
+O único lugar capaz de fazê-la é o misterioso "Sereia Tattoo Studio".
 Dizem que ele só pode ser encontrado por quem realmente está determinado.
-
 📍 Encontre o estúdio.
-
 Você aceita a missão?
 `
   return (
