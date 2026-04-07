@@ -12,8 +12,8 @@ export function GameOver() {
   const characterPose = isGameBeat ? selectedCharacter?.victory : selectedCharacter?.defeat
 
   const gameOverText = isGameBeat
-    ? 'Parabéns! Sua Tattoo ficou Linda! Agora só falta entrar em contato com o estudio e fazer uma de verdade! E não esqueça de indicar e mandar o link desse jogo para os amigos! Muito obrigado por jogar.'
-    : 'Que pena! A sua tattoo te aguarda, quando você achar que tem o que é necessario para encontrar o Sereia Tattoo Studio e fazer a sua Tattoo volte aqui e tente o desafio novamente!'
+    ? 'Parabéns! Sua tattoo ficou linda! Agora só falta entrar em contato com o estúdio e fazer uma de verdade! E não esqueça de indicar e mandar o link deste jogo para os amigos! Muito obrigado por jogar!'
+    : 'Que pena! Sua tattoo te aguarda… Quando você achar que tem o que é necessário para encontrar o Sereia Tattoo Studio e fazer a sua tattoo, volte aqui e tente o desafio novamente!'
 
   const actionButtons: DialogActionButton[] = isGameBeat
     ? [
