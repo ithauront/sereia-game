@@ -1,10 +1,9 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { DIALOG_BOX_TYPE_SPEED, MOBILE_WIDTH } from '../../consts/magicNumbers'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { AvatarBox } from '../AvatarBox'
 import { Button } from '../Button'
-import { trimToLastWord } from './utils'
 import { RoundButton } from '../roundButton/roundButton'
 
 export interface DialogActionButton {
@@ -23,52 +22,62 @@ export function DialogBox({ text, actionButtons, avatar }: DialogBoxProps) {
   const isMobile = useMediaQuery(`(max-width: ${MOBILE_WIDTH})`)
   const buttonSize = isMobile ? 'xs' : 'md'
   const containerRef = useRef<HTMLDivElement | null>(null)
-  const textRef = useRef<HTMLParagraphElement | null>(null)
-
   const [visibleText, setVisibleText] = useState('')
   const [textIndex, setTextIndex] = useState(0)
-  const [pageStartIndex, setPageStartIndex] = useState(0)
-  const [isPaused, setIsPaused] = useState(false)
-
-  const hasNext = isPaused && textIndex < text.length
-  const isFinished = textIndex >= text.length
-  const shouldDisableActions = (!isPaused && !isFinished) || hasNext
+  const [isUserScrolling, setIsUserScrolling] = useState(false)
+  const [isFinished, setIsFinished] = useState(false)
 
   useEffect(() => {
-    if (isPaused) return
     if (isFinished) return
 
     const timeout = setTimeout(() => {
       setVisibleText((prev) => prev + text[textIndex])
-      setTextIndex((prev) => prev + 1)
-    }, DIALOG_BOX_TYPE_SPEED)
-
-    return () => clearTimeout(timeout)
-  }, [textIndex, text, isPaused, isFinished])
-
-  useLayoutEffect(() => {
-    const textEl = textRef.current
-    const containerEl = containerRef.current
-    if (!textEl || !containerEl) return
-
-    const isOverflowing = textEl.scrollHeight > containerEl.clientHeight
-
-    if (isOverflowing && !isPaused) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setVisibleText((prev) => {
-        const safe = trimToLastWord(prev)
-        setTextIndex(pageStartIndex + safe.length)
-        return safe
+      setTextIndex((prev) => {
+        const nextIndex = prev + 1
+        if (nextIndex >= text.length) {
+          setIsFinished(true)
+        }
+        return nextIndex
       })
-      setIsPaused(true)
-    }
-  }, [visibleText, isPaused, pageStartIndex])
+    }, DIALOG_BOX_TYPE_SPEED)
+    return () => clearTimeout(timeout)
+  }, [textIndex, text, isFinished])
 
-  function handleNext() {
-    setPageStartIndex(textIndex)
-    setVisibleText('')
-    setIsPaused(false)
+  useEffect(() => {
+    const element = containerRef.current
+    if (!element) return
+
+    if (!isUserScrolling) {
+      element.scrollTop = element.scrollHeight
+    }
+  }, [visibleText, isUserScrolling])
+
+  useEffect(() => {
+    const element = containerRef.current
+    if (!element) return
+
+    const handleScroll = () => {
+      const isAtBottom = element.scrollHeight - element.scrollTop - element.scrollHeight < 20
+
+      setIsUserScrolling(!isAtBottom)
+    }
+    element.addEventListener('scroll', handleScroll)
+
+    return () => element.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  function handleRevealAll() {
+    setVisibleText(text)
+    setTextIndex(text.length)
+    setIsFinished(true)
+
+    const element = containerRef.current
+    if (element) {
+      element.scrollTop = element.scrollHeight
+    }
   }
+
+  const shouldDisableActions = !isFinished
 
   return (
     <div className="w-full max-w-4xl mx-auto p-4 flex flex-col gap-4 ">
@@ -87,34 +96,32 @@ export function DialogBox({ text, actionButtons, avatar }: DialogBoxProps) {
           {avatar && <AvatarBox imgSrc={avatar} />}
 
           <div
-            ref={containerRef}
             className="
             relative
-            w-full
+            w-full"
+          >
+            <div
+              ref={containerRef}
+              className="
             max-h-28
             sm:max-h-36
             md:max-h-44
-            overflow-hidden
+            overflow-y-auto
            bg-stone-50
             border
             border-stone-300
             shadow-inner
             rounded-md
             p-3
-            
+            cursor-pointer
           "
-            onClick={handleNext}
-          >
-            <p
-              ref={textRef}
-              className="text-left text-base sm:text-xl leading-relaxed whitespace-pre-line"
+              onClick={handleRevealAll}
             >
-              {visibleText}
-            </p>
-
-            {hasNext && (
-              <div className="absolute bottom-1 right-2">
-                <RoundButton direction="right" size="sm" onClick={handleNext} isInDialog />
+              <p className="text-left text-base sm:text-xl leading-relaxed">{visibleText}</p>
+            </div>
+            {!isFinished && (
+              <div className="absolute bottom-2 right-3 pointer-events-none">
+                <RoundButton direction="right" size="sm" onClick={handleRevealAll} isInDialog />
               </div>
             )}
           </div>
