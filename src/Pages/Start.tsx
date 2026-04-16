@@ -45,10 +45,7 @@ export function Start() {
   useEffect(() => {
     loadCollisionMapData(`${import.meta.env.BASE_URL}city_map_walkable.jpg`).then(setCollisionData)
   }, [])
-  //TODO: enre farol de itapua e aeroporto esta andando pelo mar
-  // TODO: ver como fica a questão de leitura, pq ele corta a palavra e volta. talvez em celular deixar todo e permitir scroll, ou sempre permitir scroll
-  // TODO: na parte do zeramento, ter algo de compartilhar o link, botéao de copiar. facilitar o compartilhamento.
-  //TODO: fazer uma pagina notfound
+  //TODO: enre farol de itapua e aeroporto esta andando pelo mar mesma coisa entre pelourinho e bonfim
   return (
     <div className="relative overflow-hidden w-screen h-screen">
       <div
