@@ -99,7 +99,7 @@ export const cutscenesData = {
   },
   tororo: {
     place: Tororo,
-    text: 'O Dique do Tororó é o ponto de encontro de toda a cidade. Todas as ruas parecem levar até aqui! Os orixás sobre essas águas viraram um dos grandes símbolos de Salvador. E a cidade toda desce para ver os jogos na Fonte Nova. Hoje tem Ba-Vi/ Vvem assistir ao jogo com a gente e depois continue sua procura!',
+    text: 'O Dique do Tororó é o ponto de encontro de toda a cidade. Todas as ruas parecem levar até aqui! Os orixás sobre essas águas viraram um dos grandes símbolos de Salvador. E a cidade toda desce para ver os jogos na Fonte Nova. Hoje tem Ba-Vi! Vem assistir ao jogo com a gente e depois continue sua procura!',
   },
   gordinhas: {
     place: Gordinhas,
