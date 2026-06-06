@@ -12,13 +12,11 @@ import pituacu from '../assets/pituacu.png'
 import rioVermelho from '../assets/rio-vermelho.jpg'
 import tororo from '../assets/tororo.png'
 
-const base = import.meta.env.BASE_URL
-
 const images = [
-  `${base}/select-screen-bg.jpg`,
-  `${base}/city_map.jpg`,
-  `${base}/city_map_walkable.jpg`,
-  `${base}/water.jpg`,
+  '/select-screen-bg.jpg',
+  '/city_map.jpg',
+  '/city_map_walkable.jpg',
+  '/water.jpg',
   aeroporto,
   barra,
   bonfim,
