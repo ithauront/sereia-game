@@ -2,16 +2,15 @@ import type React from 'react'
 import { useEffect, useState } from 'react'
 
 import { Character } from '../Components/Character'
+import { useCharacterContext } from '../Contexts/characterContext'
 import { useWorld } from '../Contexts/worldContext'
 import { useCamera } from '../hooks/useCamera'
 import { useCameraConfig } from '../hooks/useCameraConfig'
 import { useCharacterMouvementInWorld } from '../hooks/useCharacterMovementInWorld'
-import { loadCollisionMapData } from '../utils/loadCollisionMapData'
 import { useCutsceneTrigger } from '../hooks/useCutsceneTrigger'
-import { useCharacterContext } from '../Contexts/characterContext'
+import { loadCollisionMapData } from '../utils/loadCollisionMapData'
 
 export function Start() {
-  //TODO: conseguir uma trilha sonora para o jogo inteiro. ideal pagode em 8bits
   const [collisionData, setCollisionData] = useState<ImageData | null>(null)
   const { isCharacterReady } = useCharacterContext()
 
@@ -45,7 +44,7 @@ export function Start() {
   useEffect(() => {
     loadCollisionMapData(`${import.meta.env.BASE_URL}city_map_walkable.jpg`).then(setCollisionData)
   }, [])
-  //TODO: enre farol de itapua e aeroporto esta andando pelo mar mesma coisa entre pelourinho e bonfim
+  //TODO: entre farol de itapua e aeroporto esta andando pelo mar mesma coisa entre pelourinho e bonfim
   return (
     <div className="relative overflow-hidden w-screen h-screen">
       <div
