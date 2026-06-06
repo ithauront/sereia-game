@@ -1,7 +1,7 @@
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { DialogBox, type DialogActionButton } from '../Components/DialogBox'
 import { useCharacterContext } from '../Contexts/characterContext'
-import { useState } from 'react'
 
 export function GameOver() {
   const navigate = useNavigate()
@@ -47,6 +47,16 @@ export function GameOver() {
           label: 'Compartilhar',
           type: 'green',
           onClick: handleShare,
+        },
+        {
+          label: 'Agendar tattoo',
+          type: 'green',
+          onClick: () => {
+            window.open(
+              'https://wa.me/557187274015?text=Oi!%20Joguei%20o%20Sereia%20Tattoo%20Game%20e%20gostaria%20de%20agendar%20uma%20tattoo%20ou%20piercing%20%20',
+              '_blank',
+            )
+          },
         },
         {
           label: 'Jogar novamente',
